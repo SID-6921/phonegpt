@@ -2,6 +2,8 @@
 
 Train a small language model on an Android phone's own CPU, from random weights, with no root and no app.
 
+**Links:** [the write-up](https://udgamlabs.com/blog/phonegpt) · [the trained model on Hugging Face](https://huggingface.co/udgamlabs/PhoneGPT) · [the stream recording](https://www.youtube.com/watch?v=gXQFqCBB91U)
+
 We ran this live on a 2021 Galaxy F62 against the 1.4697 in nanoGPT's README. It missed by 0.0047: best 1.4663 at one
 checkpoint, not two in a row. Story, results and limits: https://udgamlabs.com/blog/phonegpt
 
@@ -59,6 +61,16 @@ newest `run_step*.bin` instead. After a run stopped by `-minutes`, the summary's
 the step it really reached; the score is still that checkpoint's.
 
 `results/scores.csv` holds the live run's score at each checkpoint (step, score).
+
+## Write text from the trained model
+
+The checkpoints from our live run are at https://huggingface.co/udgamlabs/PhoneGPT. This needs no phone and no training text:
+
+```bash
+curl -LO https://huggingface.co/udgamlabs/PhoneGPT/resolve/main/checkpoints/live_step018000.bin
+zig cc -O3 -ffast-math -o phone_sample phone_sample.c -lpthread -lm
+./phone_sample live_step018000.bin 500
+```
 
 ## Credit
 
