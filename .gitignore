@@ -1,0 +1,8 @@
+phone_gpt
+phone_score
+input.txt
+*.bin
+*.f32
+*_positions.csv
+*_summary.txt
+.DS_Store
