@@ -545,6 +545,7 @@ int main(int argc, char** argv) {
     if (decay_iters < 0) decay_iters = iters;
     if ((B * T) % 4 || C % 4 || C % NH) { fprintf(stderr, "need B*T%%4==0, C%%4==0, C%%H==0\n"); return 1; }
     rng = (uint64_t)seed * 2654435761u + 1;
+    drop_rng = (uint64_t)seed + 13;
     pool_init(threads);
     load_data(data);
     Config cfg = { .maxT = T, .V = V_real, .Vp = (V_real + 3) / 4 * 4, .L = L, .NH = NH, .C = C };
