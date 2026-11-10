@@ -484,6 +484,7 @@ static void load_data(const char* path) {
     free(buf);
 }
 static void get_batch(const int* ids, size_t n, int B, int T, int* x, int* y, uint64_t* r) {
+    if (n <= (size_t)T + 1) { fprintf(stderr, "error: dataset too small for context length T=%d\n", T); exit(1); }
     for (int b = 0; b < B; b++) {
         size_t s = (size_t)(rand_f32(r) * (n - T - 1));
         for (int t = 0; t < T; t++) { x[b * T + t] = ids[s + t]; y[b * T + t] = ids[s + t + 1]; }

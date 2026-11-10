@@ -29,6 +29,7 @@ int main(int argc, char** argv) {
     // parity: the trainer's own fixed draws must come back
     float tl = estimate_loss(&m, train_ids, n_train, eb, 4242, x, y), vl = estimate_loss(&m, val_ids, n_val, eb, 4243, x, y);
 
+    if (n_val <= (size_t)T + 1) { fprintf(stderr, "error: held-out split too small for context length T=%d\n", T); return 1; }
     size_t nw = (n_val - T - 1) / stride + 1; // starts 0, stride, ...; the last target is val_ids[n_val - 1]
     float* win = xmalloc(nw * sizeof(float)); double* pos = calloc(T, sizeof(double)); double total = 0;
     double t0 = now_s(); size_t done = 0;
